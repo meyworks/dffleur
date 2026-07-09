@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu | DF FLEUR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="index.html"><img src="assets/logo.jpg" alt="DF FLEUR logo"><span>DF FLEUR</span></a>
+      <button class="nav-toggle" type="button">Menu</button>
+      <div class="nav-links">
+        <a href="index.html">Home</a><a class="active" href="menu.html">Menu</a><a href="news.html">News & Offers</a><a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="kicker">Luxury Selection</div>
+        <h1 class="page-title">Our Menu</h1>
+        <p class="lead">Flip naturally through our signature categories and explore every refined taste.</p>
+      </div>
+    </section>
+
+    <section class="page-body">
+      <div class="container">
+        <div id="status" class="loading"><span class="spinner"></span>Loading menu...</div>
+        <div class="menu-layout" id="menuLayout" style="display:none">
+          <aside class="category-list" id="categoryList"></aside>
+          <div>
+            <div class="book-stage"><div class="book" id="book"></div></div>
+            <div class="book-controls">
+              <button class="btn" id="prev" type="button">‹ Previous</button>
+              <span class="tag gold" id="pageNo">1 / 1</span>
+              <button class="btn primary" id="next" type="button">Next ›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><div class="footer-logo"><img src="assets/logo.jpg" alt="DF FLEUR logo"><span>DF FLEUR</span></div><p>Premium restaurant and café in Heliopolis, Cairo</p></div>
+      <div><h3>Quick Links</h3><a href="menu.html">Menu</a><a href="news.html">Offers</a><a href="contact.html">Contact</a></div>
+      <div><h3>Get In Touch</h3><p>📍 Heliopolis, Cairo</p><p>📱 +20 104 000 9755</p></div>
+    </div>
+    <div class="copyright">© 2026 DF FLEUR. All rights reserved.</div>
+  </footer>
+
+  <script src="js/sheets.js"></script>
+  <script>
+    let current = 0;
+    let pages = [];
+    let categoryButtons = [];
+
+    function showPage(index) {
+      if (!pages.length) return;
+      current = Math.max(0, Math.min(index, pages.length - 1));
+      pages.forEach((page, pageIndex) => page.classList.toggle('hidden', pageIndex !== current));
+      categoryButtons.forEach((button, buttonIndex) => button.classList.toggle('active', buttonIndex === current));
+      document.getElementById('pageNo').textContent = `${current + 1} / ${pages.length}`;
+    }
+
+    function renderMenu(categories, items) {
+      const book = document.getElementById('book');
+      const categoryList = document.getElementById('categoryList');
+      book.innerHTML = categories.map(category => {
+        const list = items.filter(item => String(item.Category || '').trim() === category);
+        return `<section class="menu-page hidden">
+          <h2>${safeText(category)}</h2>
+          ${list.length ? list.map(item => `
+            <div class="menu-item">
+              ${item.ImageUrl ? `<img src="${safeText(item.ImageUrl)}" alt="${safeText(item.Name)}" onerror="this.style.display='none'">` : '<span></span>'}
+              <div>
+                <h4>${safeText(item.Name)}</h4>
+                <p>${safeText(item.Description)}</p>
+              </div>
+              <div class="price">${safeText(formatPrice(item.Price) || 'Ask')}</div>
+            </div>
+          `).join('') : '<p>No items in this category yet.</p>'}
+        </section>`;
+      }).join('');
+
+      categoryList.innerHTML = categories.map((category, index) => `<button type="button" data-index="${index}">${safeText(category)}</button>`).join('');
+      pages = [...document.querySelectorAll('.menu-page')];
+      categoryButtons = [...document.querySelectorAll('[data-index]')];
+      categoryButtons.forEach(button => button.addEventListener('click', () => showPage(Number(button.dataset.index))));
+      showPage(0);
+    }
+
+    document.getElementById('prev').addEventListener('click', () => showPage(current - 1));
+    document.getElementById('next').addEventListener('click', () => showPage(current + 1));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'ArrowRight') showPage(current + 1);
+      if (event.key === 'ArrowLeft') showPage(current - 1);
+    });
+
+    (async () => {
+      const categoryRows = await loadSheet('MenuCategories');
+      const items = activeRows(await loadSheet('MenuItems'));
+      const fromCategories = categoryRows.map(row => row.Categories || row.Category || row.Name).filter(Boolean).map(value => String(value).trim());
+      const fromItems = items.map(item => item.Category).filter(Boolean).map(value => String(value).trim());
+      const categories = [...new Set([...fromCategories, ...fromItems])];
+      document.getElementById('status').style.display = 'none';
+      document.getElementById('menuLayout').style.display = 'grid';
+      renderMenu(categories.length ? categories : ['Menu'], items);
+    })();
+  </script>
+</body>
+</html>
