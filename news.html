@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News & Offers | DF FLEUR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="news">
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="DF FLEUR home"><img src="assets/images/logo.jpg" alt="DF FLEUR logo"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span></span><span></span><span></span></button>
+    <nav class="site-nav" id="site-nav" data-nav>
+      <a href="index.html">Home</a>
+      <a href="news.html" aria-current="page">News & Offers</a>
+      <a href="menu.html">Menu</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-hero compact">
+      <p class="eyebrow">Live updates</p>
+      <h1>Last News & Offers</h1>
+      <p>Connected to the published DF FLEUR Google Sheet, with an elegant fallback for uninterrupted viewing.</p>
+    </section>
+    <section class="section">
+      <div class="filter-row" data-offer-filters>
+        <button class="chip active" type="button" data-filter="all">All</button>
+        <button class="chip" type="button" data-filter="news">News</button>
+        <button class="chip" type="button" data-filter="offer">Offers</button>
+      </div>
+      <div class="status-line" data-status="offers">Loading latest updates...</div>
+      <div class="news-grid" data-offers-list></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <img src="assets/images/logo.jpg" alt="DF FLEUR logo">
+    <p>DF FLEUR Cafe & Restaurant</p>
+  </footer>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

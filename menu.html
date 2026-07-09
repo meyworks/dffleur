@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Menu | DF FLEUR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="menu">
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="DF FLEUR home"><img src="assets/images/logo.jpg" alt="DF FLEUR logo"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span></span><span></span><span></span></button>
+    <nav class="site-nav" id="site-nav" data-nav>
+      <a href="index.html">Home</a>
+      <a href="news.html">News & Offers</a>
+      <a href="menu.html" aria-current="page">Menu</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell menu-shell">
+    <section class="page-hero compact">
+      <p class="eyebrow">Natural flipping menu</p>
+      <h1>Luxury Menu</h1>
+      <p>Browse categories as pages. Use the arrows, keyboard keys, category chips, or swipe on touch screens.</p>
+    </section>
+
+    <section class="menu-stage" aria-live="polite">
+      <div class="menu-controls">
+        <button class="icon-button" type="button" data-prev-page aria-label="Previous page">‹</button>
+        <div class="category-tabs" data-category-tabs></div>
+        <button class="icon-button" type="button" data-next-page aria-label="Next page">›</button>
+      </div>
+      <div class="status-line" data-status="menu">Loading menu...</div>
+      <div class="book" data-book></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <img src="assets/images/logo.jpg" alt="DF FLEUR logo">
+    <p>DF FLEUR Cafe & Restaurant</p>
+  </footer>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | DF FLEUR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="contact">
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="DF FLEUR home"><img src="assets/images/logo.jpg" alt="DF FLEUR logo"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span></span><span></span><span></span></button>
+    <nav class="site-nav" id="site-nav" data-nav>
+      <a href="index.html">Home</a>
+      <a href="news.html">News & Offers</a>
+      <a href="menu.html">Menu</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-hero contact-hero">
+      <p class="eyebrow">Visit DF FLEUR</p>
+      <h1>Contact Us</h1>
+      <p>Opening hours, address, phone, WhatsApp, and social links load from the published Google Sheet.</p>
+    </section>
+    <section class="section contact-layout">
+      <div class="contact-panel" data-contact-card></div>
+      <form class="reservation-form" action="mailto:df.fleur.cafe@gmail.com" method="post" enctype="text/plain">
+        <p class="eyebrow">Reservation request</p>
+        <label>Name <input name="name" autocomplete="name" required></label>
+        <label>Phone <input name="phone" autocomplete="tel" required></label>
+        <label>Date <input name="date" type="date" required></label>
+        <label>Message <textarea name="message" rows="4"></textarea></label>
+        <button class="button primary" type="submit">Send Request</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <img src="assets/images/logo.jpg" alt="DF FLEUR logo">
+    <p>DF FLEUR Cafe & Restaurant</p>
+  </footer>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

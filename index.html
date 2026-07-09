@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DF FLEUR | Cafe & Restaurant</title>
+  <meta name="description" content="DF FLEUR is a luxury cafe and restaurant in Heliopolis, Cairo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="home">
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="DF FLEUR home">
+      <img src="assets/images/logo.jpg" alt="DF FLEUR logo">
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" data-nav>
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="news.html">News & Offers</a>
+      <a href="menu.html">Menu</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img class="hero-media" src="assets/images/main.jpg" alt="DF FLEUR dining table with salads, soups, and cafe setting">
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow">Cafe & Restaurant</p>
+        <h1>DF FLEUR</h1>
+        <p class="hero-copy">Elegant dining, specialty coffee, warm hospitality, and a refined Cairo mood from morning breakfast to late-night gatherings.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="menu.html">Explore Menu</a>
+          <a class="button ghost" href="contact.html">Reserve a Visit</a>
+        </div>
+      </div>
+      <a class="hero-scroll" href="#signature" aria-label="Scroll to signature section"></a>
+    </section>
+
+    <section class="section split-section" id="signature">
+      <div>
+        <p class="eyebrow">The DF FLEUR mood</p>
+        <h2>Quiet luxury for coffee, comfort food, and elegant evenings.</h2>
+      </div>
+      <div class="signature-grid">
+        <article>
+          <span>01</span>
+          <h3>All-day cafe</h3>
+          <p>Premium hot drinks, cold creations, milkshakes, and coffee rituals served with a polished table experience.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Restaurant plates</h3>
+          <p>Soups, salads, pasta, oriental casseroles, sandwiches, and generous mains with a modern presentation.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Late-night welcome</h3>
+          <p>Designed for relaxed conversations, refined casual meals, celebrations, and comfortable late service.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section feature-band">
+      <div>
+        <p class="eyebrow">Fresh from the sheet</p>
+        <h2>Latest news and offers</h2>
+      </div>
+      <div class="preview-list" data-home-offers></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <img src="assets/images/logo.jpg" alt="DF FLEUR logo">
+    <p>DF FLEUR Cafe & Restaurant</p>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
