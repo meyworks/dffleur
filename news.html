@@ -1,3 +1,90 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>News & Offers | DF FLEUR</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/style.css"></head><body class="noise"><header class="topbar"><nav class="nav container"><a class="brand" href="index.html"><img src="assets/logo.jpg" alt="DF FLEUR"><b>DF FLEUR</b></a><button class="menuBtn">Menu</button><div class="links"><a href="index.html">Home</a><a href="menu.html">Menu</a><a class="active" href="news.html">News & Offers</a><a href="contact.html">Contact</a></div></nav></header><main><section class="page-head container"><div class="eyebrow">Latest Updates</div><h1 class="page-title">News & Offers</h1><p class="lead">Discover the latest DF FLEUR news, seasonal specials, and exclusive offers.</p></section><section class="container section" style="padding-top:10px"><div id="status" class="status"><div class="loader"></div>Loading latest news and offers...</div><div id="news" class="news-list"></div></section></main><footer class="footer"><div class="container">© DF FLEUR Restaurant & Café</div></footer><script src="js/sheets.js"></script><script>
-(async()=>{const box=document.getElementById('news'),st=document.getElementById('status');const rows=activeRows(await loadSheet('Offers'));st.style.display='none';box.innerHTML=rows.map(r=>`<article class="card"><span class="tag">${r.Type||'News'}</span>${r.ImageUrl?`<img class="news-img" src="${r.ImageUrl}" alt="${r.Title}" onerror="this.style.display='none'">`:''}<h3>${r.Title||''}</h3><p>${r.Description||''}</p>${r.StartDate?`<p><b>Date:</b> ${r.StartDate}</p>`:''}</article>`).join('')||'<p class="status">No active offers found.</p>';})();
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>News & Offers | DF FLEUR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="index.html"><img src="assets/logo.jpg" alt="DF FLEUR logo"><span>DF FLEUR</span></a>
+      <button class="nav-toggle" type="button">Menu</button>
+      <div class="nav-links">
+        <a href="index.html">Home</a><a href="menu.html">Menu</a><a class="active" href="news.html">News & Offers</a><a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="kicker">Latest Updates</div>
+        <h1 class="page-title">News & Offers</h1>
+        <p class="lead">Stay updated with our latest news, special offers, and exclusive experiences at DF FLEUR.</p>
+      </div>
+    </section>
+    <section class="page-body">
+      <div class="container">
+        <div class="filter-row">
+          <button class="tag active" data-filter="All">All</button>
+          <button class="tag" data-filter="News">News</button>
+          <button class="tag" data-filter="Offer">Offers</button>
+        </div>
+        <div id="status" class="loading"><span class="spinner"></span>Loading updates...</div>
+        <div id="newsGrid" class="news-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><div class="footer-logo"><img src="assets/logo.jpg" alt="DF FLEUR logo"><span>DF FLEUR</span></div><p>Premium restaurant and café in Heliopolis, Cairo</p></div>
+      <div><h3>Quick Links</h3><a href="menu.html">Menu</a><a href="news.html">Offers</a><a href="contact.html">Contact</a></div>
+      <div><h3>Get In Touch</h3><p>📍 Heliopolis, Cairo</p><p>📱 +20 104 000 9755</p></div>
+    </div>
+    <div class="copyright">© 2026 DF FLEUR. All rights reserved.</div>
+  </footer>
+
+  <script src="js/sheets.js"></script>
+  <script>
+    let offers = [];
+    const grid = document.getElementById('newsGrid');
+    const status = document.getElementById('status');
+    const buttons = [...document.querySelectorAll('[data-filter]')];
+
+    function render(type = 'All') {
+      const normalized = type.toLowerCase();
+      const rows = offers.filter(row => {
+        if (normalized === 'all') return true;
+        const rowType = String(row.Type || '').toLowerCase();
+        return normalized === 'offer' ? rowType.includes('offer') : rowType.includes('news');
+      });
+      grid.innerHTML = rows.map(row => `
+        <article class="card">
+          ${row.ImageUrl ? `<img src="${safeText(row.ImageUrl)}" alt="${safeText(row.Title)}" onerror="this.remove()">` : ''}
+          <span class="meta">${safeText(row.Type || 'News')}</span>
+          <h3>${safeText(row.Title)}</h3>
+          <p>${safeText(row.Description)}</p>
+        </article>
+      `).join('') || '<p>No updates available now.</p>';
+    }
+
+    buttons.forEach(btn => btn.addEventListener('click', () => {
+      buttons.forEach(item => item.classList.remove('active'));
+      btn.classList.add('active');
+      render(btn.dataset.filter);
+    }));
+
+    (async () => {
+      offers = activeRows(await loadSheet('Offers'));
+      status.style.display = 'none';
+      render('All');
+    })();
+  </script>
+</body>
+</html>

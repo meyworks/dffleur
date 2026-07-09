@@ -1,1 +1,125 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DF FLEUR | Luxury Restaurant & Café</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/style.css"></head><body class="noise"><header class="topbar"><nav class="nav container"><a class="brand" href="index.html"><img src="assets/logo.jpg" alt="DF FLEUR"><b>DF FLEUR</b></a><button class="menuBtn">Menu</button><div class="links"><a class="active" href="index.html">Home</a><a href="menu.html">Menu</a><a href="news.html">News & Offers</a><a href="contact.html">Contact</a></div></nav></header><main><section class="hero"><div class="container"><img class="logo-hero" src="assets/logo.jpg" alt="DF FLEUR Logo"><div class="eyebrow">Restaurant & Café</div><h1>DF FLEUR</h1><p>Luxury dining, specialty coffee, elegant flavors, and a warm café atmosphere in the heart of Heliopolis.</p><div class="actions"><a class="btn primary" href="menu.html">Open The Menu</a><a class="btn" href="news.html">Latest Offers</a><a class="btn" href="contact.html">Visit Us</a></div></div></section><section class="section"><div class="container grid"><article class="card"><span class="tag">Luxury Mood</span><h3>Elegant Experience</h3><p>A refined black and gold atmosphere designed for relaxed dining, premium drinks, and memorable moments.</p></article><article class="card"><span class="tag">Selected Taste</span><h3>Fresh Flavors</h3><p>Carefully presented meals, desserts, and café selections with a touch of DF FLEUR elegance.</p></article><article class="card"><span class="tag">Warm Welcome</span><h3>Visit DF FLEUR</h3><p>Discover our latest offers, browse the menu, and find us easily for your next visit.</p></article></div></section></main><footer class="footer"><div class="container">© <span id="y"></span> DF FLEUR Restaurant & Café</div></footer><script>document.getElementById('y').textContent=new Date().getFullYear()</script><script src="js/sheets.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DF FLEUR | Restaurant & Café</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="index.html"><img src="assets/logo.jpg" alt="DF FLEUR logo"><span>DF FLEUR</span></a>
+      <button class="nav-toggle" type="button">Menu</button>
+      <div class="nav-links">
+        <a class="active" href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="news.html">News & Offers</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="kicker">Welcome to Elegance</div>
+          <h1>Discover the Art of Refined Dining</h1>
+          <p>Experience premium cuisine and exceptional coffee culture in Cairo’s most sophisticated dining destination.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="menu.html">Explore Menu <span>›</span></a>
+            <a class="btn" href="contact.html">Reserve Now <span>›</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="mouse" aria-hidden="true"></div>
+    </section>
+
+    <section class="section news-preview">
+      <div class="container" style="display:contents">
+        <div class="container" style="display:grid;grid-template-columns:inherit;gap:inherit;align-items:center">
+          <div>
+            <div class="kicker">Latest News</div>
+            <h2 class="section-title">What’s New at DF FLEUR</h2>
+            <p class="lead">Stay updated with our latest offerings, special events, and exclusive experiences. Every cup tells a story.</p>
+            <a class="btn" href="news.html">View All News & Offers <span>›</span></a>
+          </div>
+          <div class="mini-news" id="homeNews">
+            <div class="loading"><span class="spinner"></span>Loading latest updates...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-band">
+      <div class="container">
+        <div class="feature-text">
+          <div class="kicker">Coffee Culture</div>
+          <h2 class="section-title">Every Cup Tells a Story</h2>
+          <p class="lead">Immerse yourself in our premium coffee selection, expertly crafted by our master baristas. From morning espresso to afternoon indulgence.</p>
+          <a class="btn primary" href="menu.html">Explore Beverages <span>›</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <h2 class="section-title">Ready for an Unforgettable Experience?</h2>
+        <p class="lead" style="margin-left:auto;margin-right:auto">Reserve your table or visit us for a premium dining and coffee experience in the heart of Heliopolis.</p>
+        <div class="btn-row" style="justify-content:center;margin-top:34px">
+          <a class="btn primary" href="contact.html">Get In Touch <span>›</span></a>
+          <a class="btn" href="contact.html#map">View Location <span>›</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-logo"><img src="assets/logo.jpg" alt="DF FLEUR logo"><span>DF FLEUR</span></div>
+        <p>Premium restaurant and café in Heliopolis, Cairo</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <a href="menu.html">Menu</a>
+        <a href="news.html">Offers</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div id="footerContact">
+        <h3>Get In Touch</h3>
+        <p>📍 Heliopolis, Cairo</p>
+        <p>📱 +20 104 000 9755</p>
+      </div>
+    </div>
+    <div class="copyright">© <span id="year"></span> DF FLEUR. All rights reserved.</div>
+  </footer>
+
+  <script src="js/sheets.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    (async () => {
+      const newsHolder = document.getElementById('homeNews');
+      const rows = activeRows(await loadSheet('Offers')).slice(0, 3);
+      newsHolder.innerHTML = rows.map(row => `
+        <article class="news-card">
+          <h3>${safeText(row.Title)}</h3>
+          <p>${safeText(row.Description)}</p>
+        </article>
+      `).join('') || '<p>No updates available now.</p>';
+
+      const contact = (await loadSheet('Contact'))[0] || {};
+      const footer = document.getElementById('footerContact');
+      footer.innerHTML = `
+        <h3>Get In Touch</h3>
+        <p>📍 ${safeText(contact.Address || 'Heliopolis, Cairo')}</p>
+        <p>📱 ${safeText(contact.Phone || '+20 104 000 9755')}</p>
+      `;
+    })();
+  </script>
+</body>
+</html>

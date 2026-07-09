@@ -1,3 +1,99 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Contact | DF FLEUR</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/style.css"></head><body class="noise"><header class="topbar"><nav class="nav container"><a class="brand" href="index.html"><img src="assets/logo.jpg" alt="DF FLEUR"><b>DF FLEUR</b></a><button class="menuBtn">Menu</button><div class="links"><a href="index.html">Home</a><a href="menu.html">Menu</a><a href="news.html">News & Offers</a><a class="active" href="contact.html">Contact</a></div></nav></header><main><section class="page-head container"><div class="eyebrow">Find Us</div><h1 class="page-title">Contact Us</h1><p class="lead">We are happy to welcome you. Find our location, opening hours, and contact details below.</p></section><section class="container section" style="padding-top:10px"><div id="status" class="status"><div class="loader"></div>Loading contact details...</div><div id="contact" class="contact-wrap"></div></section></main><footer class="footer"><div class="container">© DF FLEUR Restaurant & Café</div></footer><script src="js/sheets.js"></script><script>
-(async()=>{const holder=document.getElementById('contact'),st=document.getElementById('status');const c=(await loadSheet('Contact'))[0]||{};st.style.display='none';const mapQuery=encodeURIComponent(c.Address||'DF Fleur Cairo');holder.innerHTML=`<article class="card"><span class="tag">${c.Name||'DF FLEUR'}</span><div class="contact-line"><b>Phone</b><a class="btn" href="tel:${c.Phone||''}">${c.Phone||''}</a></div><div class="contact-line"><b>WhatsApp</b><a class="btn primary" href="https://wa.me/${c.WhatsApp||''}" target="_blank">Chat on WhatsApp</a></div><div class="contact-line"><b>Address</b>${c.Address||''}</div><div class="contact-line"><b>Opening Hours</b>${c.OpeningHours||''}</div><div class="actions" style="justify-content:flex-start;margin-top:20px">${c.FacebookUrl?`<a class="btn" href="${c.FacebookUrl}" target="_blank">Facebook</a>`:''}${c.InstagramUrl?`<a class="btn" href="${c.InstagramUrl}" target="_blank">Instagram</a>`:''}${c.MapUrl?`<a class="btn primary" href="${c.MapUrl}" target="_blank">Open Map</a>`:''}</div></article><article class="card"><iframe class="map-frame" loading="lazy" src="https://www.google.com/maps?q=${mapQuery}&output=embed"></iframe></article>`;})();
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact | DF FLEUR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="index.html"><img src="assets/logo.jpg" alt="DF FLEUR logo"><span>DF FLEUR</span></a>
+      <button class="nav-toggle" type="button">Menu</button>
+      <div class="nav-links">
+        <a href="index.html">Home</a><a href="menu.html">Menu</a><a href="news.html">News & Offers</a><a class="active" href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="kicker">Visit Us</div>
+        <h1 class="page-title">Contact Us</h1>
+        <p class="lead">We are happy to welcome you for a premium dining and coffee experience.</p>
+      </div>
+    </section>
+
+    <section class="page-body">
+      <div class="container">
+        <div id="status" class="loading"><span class="spinner"></span>Loading contact details...</div>
+        <div class="contact-grid" id="contactGrid" style="display:none">
+          <div class="contact-info" id="contactInfo"></div>
+          <form class="contact-form" id="contactForm">
+            <h2>Send us a Message</h2>
+            <div class="field"><label for="name">Name</label><input id="name" name="name" placeholder="Your name" required></div>
+            <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="your@email.com"></div>
+            <div class="field"><label for="phone">Phone (Optional)</label><input id="phone" name="phone" placeholder="Your phone number"></div>
+            <div class="field"><label for="message">Message</label><textarea id="message" name="message" placeholder="Your message..." required></textarea></div>
+            <button class="btn primary" type="submit" style="width:100%">Send Message</button>
+          </form>
+        </div>
+        <iframe id="map" class="contact-map" loading="lazy"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><div class="footer-logo"><img src="assets/logo.jpg" alt="DF FLEUR logo"><span>DF FLEUR</span></div><p>Premium restaurant and café in Heliopolis, Cairo</p></div>
+      <div><h3>Quick Links</h3><a href="menu.html">Menu</a><a href="news.html">Offers</a><a href="contact.html">Contact</a></div>
+      <div><h3>Get In Touch</h3><p>📍 Heliopolis, Cairo</p><p>📱 +20 104 000 9755</p></div>
+    </div>
+    <div class="copyright">© 2026 DF FLEUR. All rights reserved.</div>
+  </footer>
+
+  <script src="js/sheets.js"></script>
+  <script>
+    let contact = {};
+    (async () => {
+      contact = (await loadSheet('Contact'))[0] || {};
+      const name = contact.Name || 'DF Fleur Restaurant & Café';
+      const phone = contact.Phone || '01040009755';
+      const whatsapp = normalizeWhatsApp(contact.WhatsApp || phone);
+      const address = contact.Address || '24 Mohamed Farid Street, El Nozha / Heliopolis, Cairo';
+      const hours = contact.OpeningHours || 'Daily 9:30 AM to 2:00 AM';
+      document.getElementById('contactInfo').innerHTML = `
+        <h2>${safeText(name)}</h2>
+        <div class="info-line"><div class="icon">⌖</div><div><h3>Address</h3><p>${safeText(address)}</p></div></div>
+        <div class="info-line"><div class="icon">☏</div><div><h3>Phone</h3><a href="tel:${safeText(phone)}">${safeText(phone)}</a></div></div>
+        <div class="info-line"><div class="icon">☏</div><div><h3>WhatsApp</h3><a href="https://wa.me/${safeText(whatsapp)}" target="_blank">+${safeText(whatsapp)}</a></div></div>
+        <div class="info-line"><div class="icon">◷</div><div><h3>Opening Hours</h3><p>${safeText(hours)}</p></div></div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:36px 0">
+        <h2 style="font-size:34px">Follow Us</h2>
+        <div class="socials">
+          ${contact.FacebookUrl ? `<a href="${safeText(contact.FacebookUrl)}" target="_blank">f</a>` : ''}
+          ${contact.InstagramUrl ? `<a href="${safeText(contact.InstagramUrl)}" target="_blank">◎</a>` : ''}
+        </div>
+        ${contact.MapUrl ? `<a class="btn primary map-btn" href="${safeText(contact.MapUrl)}" target="_blank">⌖ View on Map</a>` : ''}
+      `;
+      const mapQuery = encodeURIComponent(address);
+      document.getElementById('map').src = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+      document.getElementById('status').style.display = 'none';
+      document.getElementById('contactGrid').style.display = 'grid';
+    })();
+
+    document.getElementById('contactForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const whatsapp = normalizeWhatsApp(contact.WhatsApp || contact.Phone || '201040009755');
+      const data = new FormData(event.currentTarget);
+      const text = `Hello DF FLEUR,%0A%0AName: ${encodeURIComponent(data.get('name') || '')}%0AEmail: ${encodeURIComponent(data.get('email') || '')}%0APhone: ${encodeURIComponent(data.get('phone') || '')}%0AMessage: ${encodeURIComponent(data.get('message') || '')}`;
+      window.open(`https://wa.me/${whatsapp}?text=${text}`, '_blank');
+    });
+  </script>
+</body>
+</html>
