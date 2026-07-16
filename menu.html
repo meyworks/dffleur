@@ -8,6 +8,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    [data-status="menu"] { display: none !important; }
+    .menu-item-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 1rem;
+      border-radius: 14px;
+    }
+  </style>
 </head>
 <body data-page="menu">
   <header class="site-header" data-header>
@@ -34,7 +45,7 @@
         <div class="category-tabs" data-category-tabs></div>
         <button class="icon-button" type="button" data-next-page aria-label="Next page">›</button>
       </div>
-      <div class="status-line" data-status="menu">Loading menu...</div>
+      <div class="status-line" data-status="menu" hidden aria-hidden="true"></div>
       <div class="book" data-book></div>
     </section>
   </main>
@@ -43,6 +54,101 @@
     <img src="assets/images/logo.jpg" alt="DF FLEUR logo">
     <p>DF FLEUR Cafe & Restaurant</p>
   </footer>
+  <script>
+    // Capture menu item images returned by the same database request used by app.js.
+    window.dfFleurMenuImages = new Map();
+
+    function collectMenuImages(payload) {
+      const rows = [];
+
+      function walk(value) {
+        if (!value) return;
+        if (Array.isArray(value)) {
+          value.forEach(walk);
+          return;
+        }
+        if (typeof value !== 'object') return;
+
+        const name = value.Name ?? value.name ?? value.Title ?? value.title;
+        const imageUrl = value.ImageUrl ?? value.imageUrl ?? value.imageURL ?? value.image ?? value.Image;
+        if (name && imageUrl) rows.push([String(name).trim(), String(imageUrl).trim()]);
+
+        Object.values(value).forEach(walk);
+      }
+
+      walk(payload);
+      rows.forEach(([name, imageUrl]) => {
+        if (name && imageUrl) window.dfFleurMenuImages.set(name.toLowerCase(), imageUrl);
+      });
+
+      applyDatabaseImages();
+    }
+
+    function applyDatabaseImages() {
+      if (!window.dfFleurMenuImages.size) return;
+
+      const candidates = document.querySelectorAll(
+        '[data-book] article, [data-book] .menu-item, [data-book] .menu-card, [data-book] .dish, [data-book] li, [data-book] .card'
+      );
+
+      candidates.forEach((card) => {
+        if (card.dataset.databaseImageApplied === 'true') return;
+
+        const cardText = (card.textContent || '').toLowerCase();
+        const match = Array.from(window.dfFleurMenuImages.entries()).find(([name]) => cardText.includes(name));
+        if (!match) return;
+
+        const [itemName, imageUrl] = match;
+        let image = card.querySelector('img');
+
+        if (!image) {
+          image = document.createElement('img');
+          image.className = 'menu-item-image';
+          image.loading = 'lazy';
+          image.decoding = 'async';
+          card.prepend(image);
+        }
+
+        image.src = imageUrl;
+        image.alt = itemName;
+        image.referrerPolicy = 'no-referrer';
+        image.onerror = function () {
+          this.remove();
+        };
+
+        card.dataset.databaseImageApplied = 'true';
+      });
+    }
+
+    // Observe all JSON/JSONP-like fetch responses used by the website and extract MenuItems ImageUrl values.
+    const originalFetch = window.fetch.bind(window);
+    window.fetch = async function (...args) {
+      const response = await originalFetch(...args);
+      try {
+        const clone = response.clone();
+        const contentType = clone.headers.get('content-type') || '';
+
+        if (contentType.includes('application/json') || contentType.includes('text/plain')) {
+          const text = await clone.text();
+          const cleaned = text.trim().replace(/^\w+\s*\(/, '').replace(/\)\s*;?$/, '');
+          collectMenuImages(JSON.parse(cleaned));
+        }
+      } catch (error) {
+        // app.js continues normally if a response is not JSON.
+      }
+      return response;
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const book = document.querySelector('[data-book]');
+      if (!book) return;
+
+      new MutationObserver(applyDatabaseImages).observe(book, {
+        childList: true,
+        subtree: true
+      });
+    });
+  </script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>
