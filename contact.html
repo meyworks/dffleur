@@ -25,17 +25,17 @@
     <section class="page-hero contact-hero">
       <p class="eyebrow">Visit DF FLEUR</p>
       <h1>Contact Us</h1>
-      <p>Opening hours, address, phone, WhatsApp, and social links load from the published Google Sheet.</p>
+      <p>Find our opening hours, address, phone number, WhatsApp, and social media links below.</p>
     </section>
     <section class="section contact-layout">
       <div class="contact-panel" data-contact-card></div>
-      <form class="reservation-form" action="mailto:df.fleur.cafe@gmail.com" method="post" enctype="text/plain">
+      <form class="reservation-form" id="reservation-form">
         <p class="eyebrow">Reservation request</p>
         <label>Name <input name="name" autocomplete="name" required></label>
         <label>Phone <input name="phone" autocomplete="tel" required></label>
         <label>Date <input name="date" type="date" required></label>
         <label>Message <textarea name="message" rows="4"></textarea></label>
-        <button class="button primary" type="submit">Send Request</button>
+        <button class="button primary" type="submit">Send Request Via WhatsApp</button>
       </form>
     </section>
   </main>
@@ -45,5 +45,64 @@
     <p>DF FLEUR Cafe & Restaurant</p>
   </footer>
   <script src="assets/js/app.js"></script>
+  <script>
+    function getDatabaseWhatsAppNumber() {
+      const contactCard = document.querySelector('[data-contact-card]');
+      if (!contactCard) return '';
+
+      const whatsappLink = contactCard.querySelector(
+        'a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href*="whatsapp.com/send"]'
+      );
+
+      if (whatsappLink) {
+        try {
+          const url = new URL(whatsappLink.href, window.location.href);
+          const queryNumber = url.searchParams.get('phone') || '';
+          const pathNumber = url.pathname.replace(/\D/g, '');
+          return (queryNumber || pathNumber).replace(/\D/g, '');
+        } catch (error) {
+          return whatsappLink.getAttribute('href').replace(/\D/g, '');
+        }
+      }
+
+      // Fallback to a displayed WhatsApp number loaded into the contact card.
+      const whatsappTextElement = Array.from(contactCard.querySelectorAll('*')).find(function (element) {
+        return /whatsapp/i.test(element.textContent || '');
+      });
+
+      return whatsappTextElement
+        ? (whatsappTextElement.textContent || '').replace(/\D/g, '')
+        : '';
+    }
+
+    document.getElementById('reservation-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const form = event.currentTarget;
+      const whatsappNumber = getDatabaseWhatsAppNumber();
+
+      if (!whatsappNumber) {
+        alert('The WhatsApp number is still loading. Please wait a moment and try again.');
+        return;
+      }
+
+      const name = form.elements.name.value.trim();
+      const phone = form.elements.phone.value.trim();
+      const date = form.elements.date.value;
+      const message = form.elements.message.value.trim();
+
+      const reservationMessage = [
+        'Hello DF FLEUR, I would like to request a reservation.',
+        '',
+        'Name: ' + name,
+        'Phone: ' + phone,
+        'Date: ' + date,
+        'Message: ' + (message || 'No additional message')
+      ].join('\n');
+
+      const whatsappUrl = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(reservationMessage);
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    });
+  </script>
 </body>
 </html>
